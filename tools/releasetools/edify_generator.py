@@ -132,10 +132,11 @@ class EdifyGenerator(object):
 
   def AssertDevice(self, device):
     """Assert that the device identifier is the given string."""
-    cmd = ('getprop("ro.product.device") == "%s" || '
+    cmd = (' || '.join(['getprop("ro.product.device") == "%s" || getprop("ro.build.product") == "%s"'
+                         % (i, i) for i in device.split(",")]) + ' || '
            'abort("E%d: This package is for \\"%s\\" devices; '
            'this is a \\"" + getprop("ro.product.device") + "\\".");') % (
-               device, common.ErrorCode.DEVICE_MISMATCH, device)
+               common.ErrorCode.DEVICE_MISMATCH, device)
     self.script.append(cmd)
 
   def AssertSomeBootloader(self, *bootloaders):
@@ -145,6 +146,11 @@ class EdifyGenerator(object):
                          for b in bootloaders]) +
            ");")
     self.script.append(self.WordWrap(cmd))
+
+  def FlashMagisk(self):
+    self.script.append('package_extract_dir("magisk", "/tmp/magisk");')
+    self.script.append('run_program("/sbin/busybox", "unzip", "/tmp/magisk/magisk.zip", "META-INF/com/google/android/*", "-d", "/tmp/magisk");')
+    self.script.append('run_program("/sbin/busybox", "sh", "/tmp/magisk/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/magisk/magisk.zip");')
 
   def ShowProgress(self, frac, dur):
     """Update the progress bar, advancing it over 'frac' over the next
