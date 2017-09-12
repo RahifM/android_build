@@ -752,7 +752,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.WriteRawImage("/boot", "boot.img")
 
   if block_based:
-    if os.getenv('WITH_MAGISK','true') != 'false' :
+      if os.getenv('WITH_MAGISK','true') != 'false' :
       script.Print("Flashing Magisk...")
       common.ZipWriteStr(output_zip, "magisk/magisk.zip",
       ""+input_zip.read("SYSTEM/addon.d/Magisk.zip"))
