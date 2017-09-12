@@ -24,7 +24,6 @@ PRODUCT_PACKAGES += \
     BasicDreams \
     BlockedNumberProvider \
     BookmarkProvider \
-    Browser2 \
     Calendar \
     CalendarProvider \
     CaptivePortalLogin \
@@ -41,7 +40,7 @@ PRODUCT_PACKAGES += \
     KeyChain \
     Keyguard \
     LatinIME \
-    Launcher2 \
+    Launcher3 \
     ManagedProvisioning \
     MtpDocumentsProvider \
     PicoTts \
@@ -50,13 +49,13 @@ PRODUCT_PACKAGES += \
     PrintSpooler \
     PrintRecommendationService \
     ProxyHandler \
-    QuickSearchBox \
     Settings \
     SharedStorageBackup \
     StorageManager \
     Telecom \
     TeleService \
     VpnDialogs \
-    MmsService
+    MmsService \
+    WallpaperPicker
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_base.mk)
